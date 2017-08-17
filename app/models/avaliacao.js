@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
- 
-var AvaliacaoSchema = new Schema({
-    nome: String,
-    valor: Number,
+const restful = require('node-restful')
+const mongoose = restful.mongoose
+
+var AvaliacaoSchema = new mongoose.Schema({
+    nome: {type:String, required:true},
+    valor:{type:Number, required:true} ,
     fator: Number,
-    curso: {type: mongoose.Schema.Types.ObjectId, ref: 'Curso'},
-    tipo: {type: String, enum: ["Trabalho", "Avaliação"]},
+    curso: {type: mongoose.Schema.Types.ObjectId, ref: 'Curso', required: true},
+    tipo: {type: String, required: true, uppercase:true, enum: ["TRAB", "AVAL"]},
     createAt: { type: Date, default: Date.now }
 });
  
-module.exports = mongoose.model('Avaliacao', AvaliacaoSchema);
+module.exports = restful.model('Avaliacao', AvaliacaoSchema);

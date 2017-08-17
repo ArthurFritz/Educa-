@@ -5,13 +5,15 @@
   "description": "Sistema para gerenciamento de aulas",
   "name": "educa-mais",
   "main": "loader.js",
-  "scripts": { 
-    "start" : "node loader.js" 
+  "scripts": {
+    "start": "node loader.js"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
+    "lodash": "^4.17.4",
     "mongoose": "^4.11.7",
+    "node-restful": "^0.2.6",
     "request": "^2.81.0"
   }
 }

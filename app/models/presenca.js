@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const restful = require('node-restful')
+const mongoose = restful.mongoose
  
-var PresencaSchema = new Schema({
-    curso: { type: mongoose.Schema.Types.ObjectId, ref: 'Curso' },
-    data: Date,
-    presente: Boolean,
-    aluno: { type: mongoose.Schema.Types.ObjectId, ref: 'Pessoa' }
+var PresencaSchema = new mongoose.Schema({
+    curso: { type: mongoose.Schema.Types.ObjectId, ref: 'Curso', required:true },
+    data: {type:Date, required:true},
+    presente: {type:Boolean, required:true},
+    aluno: { type: mongoose.Schema.Types.ObjectId, ref: 'Pessoa', required:true }
 });
  
-module.exports = mongoose.model('Presenca', CursoSchema);
+module.exports = restful.model('Presenca', CursoSchema);

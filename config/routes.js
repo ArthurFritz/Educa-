@@ -8,5 +8,8 @@ module.exports = function (app) {
   const api = express.Router();
   app.use('/api/v1', api);
 
+  //API Routes
+  const usuarioService = require('../app/services/usuarioService')
+  usuarioService.register(api, '/user')
   
 }

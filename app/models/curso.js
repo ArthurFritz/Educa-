@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const restful = require('node-restful')
+const mongoose = restful.mongoose
  
-var CursoSchema = new Schema({
-    nome: String,
+var CursoSchema = new mongoose.Schema({
+    nome: {type:String, required:true},
     referencia: String,
     horas: Number,
     media: Number,
     frequencia: Number,
-    inicio: Date,
+    inicio: {type:Date, required:true},
     alunos: [
         { type: mongoose.Schema.Types.ObjectId, ref: 'Pessoa' }
     ],
@@ -15,4 +15,4 @@ var CursoSchema = new Schema({
     createAt: { type: Date, default: Date.now }
 });
  
-module.exports = mongoose.model('Curso', CursoSchema);
+module.exports = restful.model('Curso', CursoSchema);

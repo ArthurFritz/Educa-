@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const restful = require('node-restful')
+const mongoose = restful.mongoose
  
-var PessoaSchema = new Schema({
-    nome: String,
+var PessoaSchema = new mongoose.Schema({
+    nome: {type:String, required:true},
     email: String,
     nascimento: Date,
     observacao:String,
@@ -11,4 +11,4 @@ var PessoaSchema = new Schema({
     createAt: { type: Date, default: Date.now }
 });
  
-module.exports = mongoose.model('Pessoa', PessoaSchema);
+module.exports = restful.model('Pessoa', PessoaSchema);
