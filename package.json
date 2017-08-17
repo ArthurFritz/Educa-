@@ -1,0 +1,17 @@
+{
+  "author": "Grupo Roxo",
+  "license": "MIT",
+  "version": "0.0.0",
+  "description": "Sistema para gerenciamento de aulas",
+  "name": "educa-mais",
+  "main": "loader.js",
+  "scripts": { 
+    "start" : "node loader.js" 
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.7",
+    "request": "^2.81.0"
+  }
+}
