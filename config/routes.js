@@ -11,5 +11,11 @@ module.exports = function (app) {
   //API Routes
   const usuarioService = require('../app/services/usuarioService')
   usuarioService.register(api, '/user')
+
+  const pessoaService = require('../app/services/pessoaService')
+  pessoaService.register(api, '/pessoa')
+
+  const cursoService = require('../app/services/cursoService')
+  cursoService.register(api, '/curso')
   
 }
