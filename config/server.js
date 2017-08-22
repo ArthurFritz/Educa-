@@ -10,7 +10,7 @@ app.use(allowCors);
 var server_port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8000; 
 var server_ip_address = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1"; 
  
-app.listen(server_ip,port, function(){
+app.listen(server_ip_address, server_port, function(){
  console.log( "Listening on " + server_ip_address + ", port " + server_port )
 });
 
