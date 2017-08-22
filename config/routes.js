@@ -17,5 +17,11 @@ module.exports = function (app) {
 
   const cursoService = require('../app/services/cursoService')
   cursoService.register(api, '/curso')
+
+  api.get('/foto/:folder/:chave', function (req, res) {
+    var folder = req.params.folder;
+    var chave = req.params.chave;
+    res.sendFile(folder + "/" + chave, { root : __dirname+"/../"} );
+  });
   
 }
