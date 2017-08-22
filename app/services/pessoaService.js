@@ -6,17 +6,25 @@ pessoa.updateOptions({ new: true, runValidators: true })
 
 pessoa.after('post', sendErrorsOrNext).after('put', sendErrorsOrNext)
 
-pessoa.before('post',function(req,res,next){
+function traitUploadFoto(req,res,next) {
   var base64Data = req.body.foto;
   if(base64Data && base64Data !=""){
     var uuidv4 = require('uuid/v4');
-    var filename = 'aluno/'+ new Date() +"_" + uuidv4() + '.jpg'
+    var filename = 'aluno/'+ new Date().getTime() +"_" + uuidv4() + '.jpg'
     require("fs").writeFile(filename, base64Data, 'base64', function(err) {
       console.log(err);
     });
     req.body.foto = filename;
   }
   next();
+}
+
+pessoa.before('post',function(req,res,next){
+  traitUploadFoto(req,res,next);
+});
+
+pessoa.before('put',function(req,res,next){
+  traitUploadFoto(req,res,next);
 });
 
 
