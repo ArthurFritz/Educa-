@@ -1,10 +1,11 @@
-const pessoa = require('../models/pessoa')
+const pessoaModel = require('../models/pessoa')
+const usuario = require('../models/usuario')
 const _ = require('lodash')
 
-pessoa.methods(['get', 'post', 'put', 'delete'])
-pessoa.updateOptions({ new: true, runValidators: true })
+pessoaModel.methods(['get', 'post', 'put', 'delete'])
+pessoaModel.updateOptions({ new: true, runValidators: true })
 
-pessoa.after('post', sendErrorsOrNext).after('put', sendErrorsOrNext)
+pessoaModel.after('post', sendErrorsOrNext).after('put', sendErrorsOrNext)
 
 function traitUploadFoto(req,res,next) {
   var base64Data = req.body.foto;
@@ -24,41 +25,24 @@ function traitUploadFoto(req,res,next) {
   next();
 }
 
-pessoa.before('post',function(req,res,next){
+pessoaModel.before('post',function(req,res,next){
   traitUploadFoto(req,res,next);
 });
 
-pessoa.before('put',function(req,res,next){
+pessoaModel.before('put',function(req,res,next){
   traitUploadFoto(req,res,next);
 });
 
-pessoa.route('professor', function(req, res, next) {
-  pessoa.aggregate([
-    {
-      $unwind: "$specs"
-    },
-      {
-        $lookup:
-          {
-            from: "Usuario",
-            localField: "_id",
-            foreignField: "pessoa",
-            as: "user"
-          }
-    },
-    {
-      $match: { "user": { $ne: [] } }
-    }
-  ], 
-  function(error, value) {
+pessoaModel.route('professor', function(req, res, next) {
+  var query = usuario.find({pessoa:{$ne:null}}).populate("pessoa").select()
+  query.exec(function (error, value){
     if (error) {
       res.status(500).json({errors: [error]})
     } else {
-      res.json({ value })
+      res.json(value)
     }
-  });
+  })
 })
-
 
 function sendErrorsOrNext(req, res, next) {
   const bundle = res.locals.bundle
@@ -76,4 +60,4 @@ function parseErrors(nodeRestfulErrors) {
   return errors
 }
 
-module.exports = pessoa
+module.exports = pessoaModel
