@@ -32,6 +32,33 @@ pessoa.before('put',function(req,res,next){
   traitUploadFoto(req,res,next);
 });
 
+pessoa.route('professor', function(req, res, next) {
+  pessoa.aggregate([
+    {
+      $unwind: "$specs"
+    },
+      {
+        $lookup:
+          {
+            from: "Usuario",
+            localField: "_id",
+            foreignField: "pessoa",
+            as: "user"
+          }
+    },
+    {
+      $match: { "user": { $ne: [] } }
+    }
+  ], 
+  function(error, value) {
+    if (error) {
+      res.status(500).json({errors: [error]})
+    } else {
+      res.json({ value })
+    }
+  });
+})
+
 
 function sendErrorsOrNext(req, res, next) {
   const bundle = res.locals.bundle
