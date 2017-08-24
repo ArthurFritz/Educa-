@@ -10,8 +10,13 @@ function traitUploadFoto(req,res,next) {
   var base64Data = req.body.foto;
   if(base64Data && base64Data !=""){
     var uuidv4 = require('uuid/v4');
-    var filename = 'aluno/'+ new Date().getTime() +"_" + uuidv4() + '.jpg'
-    require("fs").writeFile(filename, base64Data, 'base64', function(err) {
+    var fs = require('fs');
+    var folder = 'aluno';
+    if (!fs.existsSync(folder)){
+      fs.mkdirSync(folder);
+    }
+    var filename = folder + '/'+ new Date().getTime() +"_" + uuidv4() + '.jpg'
+    fs.writeFile(filename, base64Data, 'base64', function(err) {
       console.log(err);
     });
     req.body.foto = filename;
