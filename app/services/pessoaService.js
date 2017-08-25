@@ -44,6 +44,22 @@ pessoaModel.route('professor.get', function(req, res, next) {
   })
 })
 
+pessoaModel.route('alunos.get', function(req, res, next) {
+  usuario.find({pessoa:{$ne:null}}).select('pessoa').exec(
+    function(err, professores){
+      professores = professores.map(function(prof){return prof.pessoa});
+      var query = pessoaModel.find({ _id: { $nin: professores } }).sort( { nome: 1 } ).select()
+      query.exec(function (error, value){
+        if (error) {
+          res.status(500).json({errors: [error]})
+        } else {
+          res.json(value)
+        }
+      });
+    }
+  );
+})
+
 function sendErrorsOrNext(req, res, next) {
   const bundle = res.locals.bundle
   if (bundle.errors) {
