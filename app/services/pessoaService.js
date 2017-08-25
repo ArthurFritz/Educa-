@@ -33,7 +33,7 @@ pessoaModel.before('put',function(req,res,next){
   traitUploadFoto(req,res,next);
 });
 
-pessoaModel.route('professor', function(req, res, next) {
+pessoaModel.route('professor.get', function(req, res, next) {
   var query = usuario.find({pessoa:{$ne:null}}).populate("pessoa").select()
   query.exec(function (error, value){
     if (error) {

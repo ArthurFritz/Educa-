@@ -33,8 +33,8 @@ usuario.route('count', function(req, res, next) {
   })
 })
 
-usuario.route('getByUser', function(req, res, next) {
-  var query = usuario.find({ login: req.headers['login'] }).select()
+usuario.route('login.post', function(req, res, next) {
+  var query = usuario.find({ login: req.body.login, senha:req.body.senha }).populate("pessoa").select()
   query.exec(function (error, value){
     if (error) {
       res.status(500).json({errors: [error]})
@@ -43,5 +43,7 @@ usuario.route('getByUser', function(req, res, next) {
     }
   })
 })
+
+
 
 module.exports = usuario
